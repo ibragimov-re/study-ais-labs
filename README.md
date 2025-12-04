@@ -10,7 +10,7 @@
 > ## Прогресс выполнения
 > - [x] Лабораторная 1 (IP)
 > - [x] Лабораторная 2 (Backup)
-> - [ ] Лабораторная 3 (Scheduling)
+> - [x] Лабораторная 3 (Scheduling)
 > - [ ] Лабораторная 4 (PacketFiltering)
 > - [ ] Лабораторная 5 (eBPF)
 
@@ -37,7 +37,7 @@
 
 > [!NOTE]
 > ### Пример вывода
-> ```bash
+> ```
 > TO DO
 > ```
 
@@ -54,23 +54,17 @@
 
 > [!TIP]
 > ### Решение:
-> Реализован скрипт, который каждые 5 минут будет сохранять архив в дирректорию `archives`, используя цикл с задержкой, без использования `cron` или `systemd`.
+> Реализован скрипт, который каждые 5 минут будет сохранять архив, используя цикл с задержкой, без использования `cron` или `systemd`.
 
 > [!IMPORTANT]
 > ### Использование
-> ```bash
-> sudo ./run.sh
-> ```
-> ```bash
-> chmod +x /Labs/Lab2_Backup/backup.sh
-> ```
 > ```bash
 > /Labs/Lab2_Backup/backup.sh /Labs/Lab2_Backup/TestFiles/
 > ```
 
 > [!NOTE]
 > ### Пример вывода
-> ```bash
+> ```
 > Backup created: ./archives/TestFiles-2025-12-04-02:11.tgz
 > Backup created: ./archives/TestFiles-2025-12-04-02:16.tgz
 > ```
@@ -83,18 +77,19 @@
 
 > [!TIP]
 > ### Решение:
-
+> Реализован скрипт, который каждые 5 минут будет сохранять архив, используя планировщик задач cron
 
 > [!IMPORTANT]
 > ### Использование
 > ```bash
-> 
+> /Labs/Lab3_Scheduling/install_backup_cron.sh /Labs/Lab3_Scheduling/TestFiles/
 > ```
 
 > [!NOTE]
 > ### Пример вывода
-> ```bash
-> 
+> ```
+> Starting periodic command scheduler: cron.
+> Cron backup job is installed to run every 5 minutes for directory: /Labs/Lab3_Scheduling/TestFiles/
 > ```
 
 ---
@@ -118,7 +113,7 @@
 
 > [!NOTE]
 > ### Пример вывода
-> ```bash
+> ```
 > 
 > ```
 
@@ -141,6 +136,6 @@
 
 > [!NOTE]
 > ### Пример вывода
-> ```bash
+> ```
 > 
 > ```
