@@ -1,15 +1,20 @@
-IMAGE_NAME="ais-labs"
-LABS_MOUNT_DIR="$(pwd)/Labs"
+#!/bin/bash
 
-# Build the Docker image from Dockerfile
-docker build -t "$IMAGE_NAME" .
+# Exit immediately if a command exits with a non-zero status (error)
+set -e
 
-# Run container:
-# - Mount Labs directory
-# - Set local time inside container using host settings
-#     ro for read-only to avoid host's files modification
-# - Specify image and start bash shell
-docker run -it --rm \
-    -v "$LABS_MOUNT_DIR":/Labs \
-    -v /etc/localtime:/etc/localtime:ro \
-    "$IMAGE_NAME" bash
+# Setup and start the Docker containers in detached mode
+docker compose up -d
+
+# Start nginx in the container
+
+docker compose exec ais-debian bash -c "nginx"
+
+# Make iptables script executable inside the container
+docker compose exec ais-debian chmod +x /home/Labs/Lab4_PacketFiltering/setup_iptables.sh
+
+# Run iptables setup script inside the container
+docker compose exec ais-debian /home/Labs/Lab4_PacketFiltering/setup_iptables.sh
+
+# Open an interactive bash shell inside the container
+docker compose exec ais-debian bash

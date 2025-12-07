@@ -1,0 +1,47 @@
+services:
+  ais-debian:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ais-debian
+    networks:
+      public_net:
+        ipv4_address: 172.10.0.10  # Set a fixed IP in the public_net network (eth0)
+      private_net:
+        ipv4_address: 172.11.0.10 # Set a fixed IP in the private_net network (eth1)
+    ports:
+      - "8080:80" # Map container's port 80 to host's port 8080
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./Labs:/home/Labs # Mount Labs directory
+      - /etc/localtime:/etc/localtime:ro # Set local time inside container using host settings
+          # ro for read-only to avoid host's files modification
+    cap_add:
+      - NET_ADMIN # Grant network administration capabilities for iptables
+    user: root # Run container as root user for full permissions
+
+  ais-lab4-tester:
+    build:
+      context: .
+      dockerfile: Labs/Lab4_PacketFiltering/Dockerfile.tester
+    container_name: ais-lab4-tester
+    networks:
+      public_net:
+      private_net:
+    tty: true
+    stdin_open: true
+    command: /bin/bash
+
+# Define custom networks with specific subnets
+networks:
+  public_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.10.0.0/24
+  private_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.11.0.0/24
