@@ -5,10 +5,10 @@ services:
       dockerfile: Dockerfile
     container_name: ais-debian
     networks:
-      public_net:
-        ipv4_address: 172.10.0.10  # Set a fixed IP in the public_net network (eth0)
       private_net:
         ipv4_address: 172.11.0.10 # Set a fixed IP in the private_net network (eth1)
+      public_net:
+        ipv4_address: 172.10.0.10  # Set a fixed IP in the public_net network (eth0)
     ports:
       - "8080:80" # Map container's port 80 to host's port 8080
     stdin_open: true
