@@ -27,8 +27,8 @@ services:
       dockerfile: Labs/Lab4_PacketFiltering/Dockerfile.tester
     container_name: ais-lab4-tester
     networks:
-      public_net:
       private_net:
+      public_net:
     tty: true
     stdin_open: true
     command: /bin/bash
