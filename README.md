@@ -145,7 +145,20 @@
   <summary>Вывод команды ip addr show</summary>
   
 ```
-
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0@if370: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether f2:b6:b1:74:ab:7b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.10.0.10/24 brd 172.10.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+3: eth1@if371: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 86:9d:d1:eb:73:0e brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.11.0.10/24 brd 172.11.0.255 scope global eth1
+       valid_lft forever preferred_lft forever
 ```
 </details>
 
@@ -154,7 +167,22 @@
   <summary>Вывод команды iptables -L -v -n</summary>
   
 ```
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     17   --  eth0   *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+    0     0 ACCEPT     6    --  eth0   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+    0     0 ACCEPT     0    --  *      *       0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED
+    0     0 ACCEPT     0    --  lo     *       0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       0    --  eth0   *       0.0.0.0/0            0.0.0.0/0           
+    0     0 ACCEPT     6    --  eth1   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
 
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     17   --  eth1   eth0    0.0.0.0/0            0.0.0.0/0            udp dpt:20000
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     0    --  *      lo      0.0.0.0/0            0.0.0.0/0
 ```
 </details>
 
@@ -163,7 +191,9 @@
   <summary>Вывод команды iptables -t nat -L PREROUTING -v -n</summary>
   
 ```
-
+Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DNAT       17   --  eth1   *       0.0.0.0/0            0.0.0.0/0            udp dpt:10000 to:172.10.0.10:20000
 ```
 </details>
 
@@ -194,7 +224,7 @@
   <summary>Вывод команды ssh root@172.10.0.10</summary>
 
 ```
-
+ssh: connect to host 172.10.0.10 port 22: Connection timed out
 ```
 </details>
 
@@ -203,7 +233,8 @@
   <summary>Вывод команды ssh root@172.11.0.10</summary>
 
 ```
-
+</details>
+  root@172.11.0.10's password:
 ```
 </details>
 
