@@ -2,8 +2,9 @@
 
 > [!TIP]
 > ## Среда выполнения для всех лабораторных работ
-> - Контейнеризация: `Docker Engine`
 > - Хост-система: `Linux, Fedora 43 KDE Plasma Desktop`
+> - Контейнеризация: `Docker Engine`
+> - Контейнерная ОС: `Debian`
 > - Командная оболочка: `bash`
 
 > [!NOTE]
@@ -12,7 +13,7 @@
 > - [x] Лабораторная 2 (Backup)
 > - [x] Лабораторная 3 (Scheduling)
 > - [x] Лабораторная 4 (PacketFiltering)
-> - [ ] Лабораторная 5 (eBPF)
+> - [x] Лабораторная 5 (eBPF)
 
 ---
 
@@ -233,7 +234,6 @@ ssh: connect to host 172.10.0.10 port 22: Connection timed out
   <summary>Вывод команды ssh root@172.11.0.10</summary>
 
 ```
-</details>
   root@172.11.0.10's password:
 ```
 </details>
@@ -247,16 +247,65 @@ ssh: connect to host 172.10.0.10 port 22: Connection timed out
 
 > [!TIP]
 > ### Решение:
+> Реализован скрипт для сборка статистики по запущенным процессам. Для выполнения лабораторной работы использован инструмент `bpftrace`, который запускает `eBPF‑программы` и собирает данные о работе ядра `Linux`. Скрипт подписывается на `tracepoint sched_process_fork`, фиксирующий все события создания новых процессов и потоков (через системные вызовы fork, vfork, clone, posix_spawn). Так как контейнеры не имеют собственного ядра и используют ядро хоста, eBPF всегда работает на уровне ядра хоста. Поэтому в контейнер были проброшены системные каталоги (/sys, /lib/modules, /usr/src) и необходимые права, чтобы bpftrace имел доступ к данным ядра. В результате скрипт собирает статистику именно по процессам хоста, что соответствует принципу работы eBPF: наблюдение ведётся глобально на уровне ядра, независимо от границ контейнера.
 
+> [!WARNING]
+> ### Перед использованием
+> Для корректной работы `bpftrace` следует установить на хост-систему заголовки ядра. В том случае, если хост-система - Fedora, то установить можно через `dnf install`:
+> ```bash
+> sudo dnf install kernel-devel-$(uname -r) kernel-headers
+> ```
+> ```bash
+> ls /usr/src/kernels/$(uname -r)/include/linux/types.h # Проверка наличия заголовков
+> ```
 
 > [!IMPORTANT]
 > ### Использование
 > ```bash
-> 
+> home/Labs/Lab5_eBPF/spawn_statistic.sh
 > ```
 
 > [!NOTE]
 > ### Пример вывода
-> ```
-> 
-> ```
+<details>
+  <summary>Пример вывода скрипта</summary>
+
+```
+Attaching 3 probes...
+Starting process spawn statistics monitoring...
+
+===== 10-minute spawn stats =====
+@spawn[4633, glean.dispatche]: 1
+@spawn[2, kthreadd]: 1
+@spawn[1011, pool-spawner]: 1
+@spawn[102942, bash]: 2
+@spawn[102935, bash]: 2
+@spawn[102925, bash]: 2
+@spawn[2978, pool-spawner]: 2
+@spawn[666, systemd-journal]: 2
+@spawn[103062, StreamT~ns #534]: 3
+@spawn[4638, Socket Thread]: 4
+@spawn[103078, cpuUsage.sh]: 6
+@spawn[103069, cpuUsage.sh]: 6
+@spawn[102960, cpuUsage.sh]: 6
+@spawn[4639, IPDL Background]: 6
+@spawn[103088, cpuUsage.sh]: 6
+@spawn[1156, pool-spawner]: 6
+@spawn[102947, cpuUsage.sh]: 6
+@spawn[103113, cpuUsage.sh]: 6
+@spawn[697, systemd-userdbd]: 6
+@spawn[103122, cpuUsage.sh]: 6
+@spawn[4843, Privileged Cont]: 8
+@spawn[29707, Isolated Web Co]: 10
+@spawn[5271, Isolated Web Co]: 10
+@spawn[30441, Isolated Web Co]: 10
+@spawn[14086, bash]: 11
+@spawn[4763, Renderer]: 12
+@spawn[5229, Isolated Web Co]: 12
+@spawn[13976, code]: 19
+@spawn[4576, firefox]: 19
+@spawn[102900, cpuUsage.sh]: 21
+@spawn[13962, code]: 24
+@spawn[3163, plasmashell]: 25
+```
+</details>
