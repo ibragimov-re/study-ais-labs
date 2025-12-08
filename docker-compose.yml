@@ -17,8 +17,14 @@ services:
       - ./Labs:/home/Labs # Mount Labs directory
       - /etc/localtime:/etc/localtime:ro # Set local time inside container using host settings
           # ro for read-only to avoid host's files modification
+      - /sys:/sys # Mount sys filesystem for eBPF access
+      - /usr/src:/usr/src:ro # Mount host's kernel headers for eBPF for read-only access
+      - /lib/modules:/lib/modules:ro # Mount host's kernel modules for eBPF for read-only access
+    privileged: true # Grant full acess to kernel features for eBPF
     cap_add:
       - NET_ADMIN # Grant network administration capabilities for iptables
+      - SYS_RESOURCE # Grant system resource capabilities for eBPF
+      - BPF
     user: root # Run container as root user for full permissions
 
   ais-lab4-tester:

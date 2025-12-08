@@ -5,8 +5,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install needed for labs packets and clean up apt cache
 RUN apt-get update && \
-    apt-get install -y cron curl nginx openssh-server iptables netcat-openbsd && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* 
+    apt-get install -y \ 
+    cron \
+    curl \
+    nginx \
+    openssh-server \
+    iptables \
+    netcat-openbsd \
+    bpftrace \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # SSH server setup
 RUN mkdir -p /run/sshd
