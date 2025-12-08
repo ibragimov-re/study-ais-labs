@@ -142,101 +142,101 @@
 
 > [!NOTE]
 > ### Пример вывода
-<details>
-  <summary>Вывод команды ip addr show</summary>
-  
-```
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host 
-       valid_lft forever preferred_lft forever
-2: eth0@if370: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
-    link/ether f2:b6:b1:74:ab:7b brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 172.10.0.10/24 brd 172.10.0.255 scope global eth0
-       valid_lft forever preferred_lft forever
-3: eth1@if371: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
-    link/ether 86:9d:d1:eb:73:0e brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 172.11.0.10/24 brd 172.11.0.255 scope global eth1
-       valid_lft forever preferred_lft forever
-```
-</details>
-
-
-<details>
-  <summary>Вывод команды iptables -L -v -n</summary>
-  
-```
-Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination         
-    0     0 ACCEPT     17   --  eth0   *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
-    0     0 ACCEPT     6    --  eth0   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
-    0     0 ACCEPT     0    --  *      *       0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED
-    0     0 ACCEPT     0    --  lo     *       0.0.0.0/0            0.0.0.0/0           
-    0     0 DROP       0    --  eth0   *       0.0.0.0/0            0.0.0.0/0           
-    0     0 ACCEPT     6    --  eth1   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
-
-Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination         
-    0     0 ACCEPT     17   --  eth1   eth0    0.0.0.0/0            0.0.0.0/0            udp dpt:20000
-
-Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination         
-    0     0 ACCEPT     0    --  *      lo      0.0.0.0/0            0.0.0.0/0
-```
-</details>
-
-
-<details>
-  <summary>Вывод команды iptables -t nat -L PREROUTING -v -n</summary>
-  
-```
-Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination         
-    0     0 DNAT       17   --  eth1   *       0.0.0.0/0            0.0.0.0/0            udp dpt:10000 to:172.10.0.10:20000
-```
-</details>
-
-
-<details>
-  <summary>Вывод команды curl http://172.10.0.10</summary>
-
-```
-...
-<title>Welcome to nginx!</title>
-...
-```
-</details>
-
-
-<details>
-  <summary>Вывод команды curl http://172.11.0.10</summary>
-
-```
-...
-<title>Welcome to nginx!</title>
-...
-```
-</details>
-
-
-<details>
-  <summary>Вывод команды ssh root@172.10.0.10</summary>
-
-```
-ssh: connect to host 172.10.0.10 port 22: Connection timed out
-```
-</details>
-
-
-<details>
-  <summary>Вывод команды ssh root@172.11.0.10</summary>
-
-```
-  root@172.11.0.10's password:
-```
-</details>
+> <details>
+>   <summary>Вывод команды ip addr show</summary>
+>   
+> ```
+> 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+>     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+>     inet 127.0.0.1/8 scope host lo
+>        valid_lft forever preferred_lft forever
+>     inet6 ::1/128 scope host 
+>        valid_lft forever preferred_lft forever
+> 2: eth0@if370: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+>     link/ether f2:b6:b1:74:ab:7b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+>     inet 172.10.0.10/24 brd 172.10.0.255 scope global eth0
+>        valid_lft forever preferred_lft forever
+> 3: eth1@if371: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+>     link/ether 86:9d:d1:eb:73:0e brd ff:ff:ff:ff:ff:ff link-netnsid 0
+>     inet 172.11.0.10/24 brd 172.11.0.255 scope global eth1
+>        valid_lft forever preferred_lft forever
+> ```
+> </details>
+> 
+> 
+> <details>
+>   <summary>Вывод команды iptables -L -v -n</summary>
+>   
+> ```
+> Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+>  pkts bytes target     prot opt in     out     source               destination         
+>     0     0 ACCEPT     17   --  eth0   *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+>     0     0 ACCEPT     6    --  eth0   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+>     0     0 ACCEPT     0    --  *      *       0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED
+>     0     0 ACCEPT     0    --  lo     *       0.0.0.0/0            0.0.0.0/0           
+>     0     0 DROP       0    --  eth0   *       0.0.0.0/0            0.0.0.0/0           
+>     0     0 ACCEPT     6    --  eth1   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+> 
+> Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+>  pkts bytes target     prot opt in     out     source               destination         
+>     0     0 ACCEPT     17   --  eth1   eth0    0.0.0.0/0            0.0.0.0/0            udp dpt:20000
+> 
+> Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+>  pkts bytes target     prot opt in     out     source               destination         
+>     0     0 ACCEPT     0    --  *      lo      0.0.0.0/0            0.0.0.0/0
+> ```
+> </details>
+> 
+> 
+> <details>
+>   <summary>Вывод команды iptables -t nat -L PREROUTING -v -n</summary>
+>   
+> ```
+> Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
+>  pkts bytes target     prot opt in     out     source               destination         
+>     0     0 DNAT       17   --  eth1   *       0.0.0.0/0            0.0.0.0/0            udp dpt:10000 to:172.10.0.10:20000
+> ```
+> </details>
+> 
+> 
+> <details>
+>   <summary>Вывод команды curl http://172.10.0.10</summary>
+> 
+> ```
+> ...
+> <title>Welcome to nginx!</title>
+> ...
+> ```
+> </details>
+> 
+> 
+> <details>
+>   <summary>Вывод команды curl http://172.11.0.10</summary>
+> 
+> ```
+> ...
+> <title>Welcome to nginx!</title>
+> ...
+> ```
+> </details>
+> 
+> 
+> <details>
+>   <summary>Вывод команды ssh root@172.10.0.10</summary>
+> 
+> ```
+> ssh: connect to host 172.10.0.10 port 22: Connection timed out
+> ```
+> </details>
+> 
+> 
+> <details>
+>   <summary>Вывод команды ssh root@172.11.0.10</summary>
+> 
+> ```
+>   root@172.11.0.10's password:
+> ```
+> </details>
 
 ---
 
@@ -267,45 +267,45 @@ ssh: connect to host 172.10.0.10 port 22: Connection timed out
 
 > [!NOTE]
 > ### Пример вывода
-<details>
-  <summary>Пример вывода скрипта</summary>
-
-```
-Attaching 3 probes...
-Starting process spawn statistics monitoring...
-
-===== 10-minute spawn stats =====
-@spawn[4633, glean.dispatche]: 1
-@spawn[2, kthreadd]: 1
-@spawn[1011, pool-spawner]: 1
-@spawn[102942, bash]: 2
-@spawn[102935, bash]: 2
-@spawn[102925, bash]: 2
-@spawn[2978, pool-spawner]: 2
-@spawn[666, systemd-journal]: 2
-@spawn[103062, StreamT~ns #534]: 3
-@spawn[4638, Socket Thread]: 4
-@spawn[103078, cpuUsage.sh]: 6
-@spawn[103069, cpuUsage.sh]: 6
-@spawn[102960, cpuUsage.sh]: 6
-@spawn[4639, IPDL Background]: 6
-@spawn[103088, cpuUsage.sh]: 6
-@spawn[1156, pool-spawner]: 6
-@spawn[102947, cpuUsage.sh]: 6
-@spawn[103113, cpuUsage.sh]: 6
-@spawn[697, systemd-userdbd]: 6
-@spawn[103122, cpuUsage.sh]: 6
-@spawn[4843, Privileged Cont]: 8
-@spawn[29707, Isolated Web Co]: 10
-@spawn[5271, Isolated Web Co]: 10
-@spawn[30441, Isolated Web Co]: 10
-@spawn[14086, bash]: 11
-@spawn[4763, Renderer]: 12
-@spawn[5229, Isolated Web Co]: 12
-@spawn[13976, code]: 19
-@spawn[4576, firefox]: 19
-@spawn[102900, cpuUsage.sh]: 21
-@spawn[13962, code]: 24
-@spawn[3163, plasmashell]: 25
-```
-</details>
+> <details>
+>   <summary>Пример вывода скрипта</summary>
+>
+> ```
+> Attaching 3 probes...
+> Starting process spawn statistics monitoring...
+> 
+> ===== 10-minute spawn stats =====
+> @spawn[4633, glean.dispatche]: 1
+> @spawn[2, kthreadd]: 1
+> @spawn[1011, pool-spawner]: 1
+> @spawn[102942, bash]: 2
+> @spawn[102935, bash]: 2
+> @spawn[102925, bash]: 2
+> @spawn[2978, pool-spawner]: 2
+> @spawn[666, systemd-journal]: 2
+> @spawn[103062, StreamT~ns #534]: 3
+> @spawn[4638, Socket Thread]: 4
+> @spawn[103078, cpuUsage.sh]: 6
+> @spawn[103069, cpuUsage.sh]: 6
+> @spawn[102960, cpuUsage.sh]: 6
+> @spawn[4639, IPDL Background]: 6
+> @spawn[103088, cpuUsage.sh]: 6
+> @spawn[1156, pool-spawner]: 6
+> @spawn[102947, cpuUsage.sh]: 6
+> @spawn[103113, cpuUsage.sh]: 6
+> @spawn[697, systemd-userdbd]: 6
+> @spawn[103122, cpuUsage.sh]: 6
+> @spawn[4843, Privileged Cont]: 8
+> @spawn[29707, Isolated Web Co]: 10
+> @spawn[5271, Isolated Web Co]: 10
+> @spawn[30441, Isolated Web Co]: 10
+> @spawn[14086, bash]: 11
+> @spawn[4763, Renderer]: 12
+> @spawn[5229, Isolated Web Co]: 12
+> @spawn[13976, code]: 19
+> @spawn[4576, firefox]: 19
+> @spawn[102900, cpuUsage.sh]: 21
+> @spawn[13962, code]: 24
+> @spawn[3163, plasmashell]: 25
+> ```
+> </details>
