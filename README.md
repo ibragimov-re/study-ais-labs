@@ -2,19 +2,23 @@
 
 > [!TIP]
 > ## Среда выполнения для всех лабораторных работ
-> - Хост-система: `Linux, Fedora 43 KDE Plasma Desktop`
-> - Контейнеризация: `Docker Engine`
-> - Контейнерная ОС: `Debian`
-> - Командная оболочка: `bash`
+> - Хост-система: `Fedora 43 KDE Plasma Desktop, Linux 6.17.9-300.fc43.x86_64`
+> - Контейнеризация: `Docker 29.1.2`
+> - Контейнерная ОС: `Debian 12`
+> - Командная оболочка: `bash 5.3.0`
 
-> [!NOTE]
-> ## Прогресс выполнения
-> - [x] Лабораторная 1 (IP)
-> - [x] Лабораторная 2 (Backup)
-> - [x] Лабораторная 3 (Scheduling)
-> - [x] Лабораторная 4 (PacketFiltering)
-> - [x] Лабораторная 5 (eBPF)
-
+> [!IMPORTANT]
+> ### Запуск контейнеров Docker для тестирования скриптов
+> ```bash
+> sudo chmod +x ./run.sh # Сделать скрипт исполняемым
+> ```
+> ```bash
+> sudo ./run.sh
+> ```
+> ### Остановка контейнеров после тестирования скриптов
+> ```bash
+> sudo ./stop.sh
+> ```
 ---
 
 ## Лабораторная 1. IP
@@ -33,13 +37,28 @@
 > [!IMPORTANT]
 > ### Использование
 > ```bash
-> TO DO
+> chmod +x /home/Labs/Lab1_IP/print_ip.sh
+> ```
+> ```bash
+> /home/Labs/Lab1_IP/print_ip.sh 192.168.0.1
+> ```
+> ```bash
+> /home/Labs/Lab1_IP/print_ip.sh 192.168.0.1/24
+> ```
+> ```bash
+> /home/Labs/Lab1_IP/print_ip.sh 192.168.0.1/255.255.255.0
 > ```
 
 > [!NOTE]
 > ### Пример вывода
 > ```
-> TO DO
+> 192.168.0.1/24
+> ```
+> ```
+> 192.168.0.1/24
+> ```
+> ```
+> 192.168.0.1/24
 > ```
 
 ---
@@ -55,19 +74,22 @@
 
 > [!TIP]
 > ### Решение:
-> Реализован скрипт, который каждые 5 минут будет сохранять архив, используя цикл с задержкой, без использования `cron` или `systemd`.
+> Реализован скрипт, который каждые 5 минут будет сохранять архив в директорию `/home/archives/`, используя цикл с задержкой, без использования `cron` или `systemd`.
 
 > [!IMPORTANT]
 > ### Использование
 > ```bash
-> /Labs/Lab2_Backup/backup.sh /Labs/Lab2_Backup/TestFiles/
+> chmod +x /home/Labs/Lab2_Backup/backup.sh
+> ```
+> ```bash
+> /home/Labs/Lab2_Backup/backup.sh /home/Labs/Lab2_Backup/TestFiles1/
 > ```
 
 > [!NOTE]
 > ### Пример вывода
 > ```
-> Backup created: ./archives/TestFiles-2025-12-04-02:11.tgz
-> Backup created: ./archives/TestFiles-2025-12-04-02:16.tgz
+> Backup created: /home/archives/TestFiles1-2025-12-09-22:25.tgz
+> Backup created: /home/archives/TestFiles1-2025-12-09-22:30.tgz
 > ```
 
 ---
@@ -78,19 +100,22 @@
 
 > [!TIP]
 > ### Решение:
-> Реализован скрипт, который каждые 5 минут будет сохранять архив, используя планировщик задач cron.
+> Реализован скрипт, который каждые 5 минут будет сохранять архив в директорию `/home/archives/`, используя планировщик задач cron.
 
 > [!IMPORTANT]
 > ### Использование
 > ```bash
-> /Labs/Lab3_Scheduling/install_backup_cron.sh /Labs/Lab3_Scheduling/TestFiles/
+> chmod +x /home/Labs/Lab3_Scheduling/install_backup_cron.sh
+> ```
+> ```bash
+> /home/Labs/Lab3_Scheduling/install_backup_cron.sh /home/Labs/Lab3_Scheduling/TestFiles2/
 > ```
 
 > [!NOTE]
 > ### Пример вывода
 > ```
 > Starting periodic command scheduler: cron.
-> Cron backup job is installed to run every 5 minutes for directory: /Labs/Lab3_Scheduling/TestFiles/
+> Cron backup job is installed to run every 5 minutes for directory: /home/Labs/Lab3_Scheduling/TestFiles2/
 > ```
 
 ---
@@ -262,7 +287,10 @@
 > [!IMPORTANT]
 > ### Использование
 > ```bash
-> home/Labs/Lab5_eBPF/spawn_statistic.sh
+> chmod +x /home/Labs/Lab5_eBPF/spawn_statistic.sh
+> ```
+> ```bash
+> /home/Labs/Lab5_eBPF/spawn_statistic.sh
 > ```
 
 > [!NOTE]
