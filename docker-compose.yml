@@ -24,7 +24,7 @@ services:
     cap_add:
       - NET_ADMIN # Grant network administration capabilities for iptables
       - SYS_RESOURCE # Grant system resource capabilities for eBPF
-      - BPF
+      - BPF # Grant BPF capabilities for eBPF
     user: root # Run container as root user for full permissions
 
   ais-lab4-tester:

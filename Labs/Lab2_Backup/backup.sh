@@ -23,7 +23,7 @@ if [[ ! -d "$path" ]]; then
 fi
 
 # Create bakup output directory
-backup_dir="./archives"
+backup_dir="/home/archives"
 mkdir -p "$backup_dir" # -p to avoid error if dir exists
 
 parent_dir=$(dirname "$path")
